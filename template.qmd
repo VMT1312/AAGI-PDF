@@ -1,0 +1,173 @@
+---
+format:
+  AAGI-pdf: default
+author: First Last
+date: last-modified
+execute: 
+  echo: false
+knitr:
+  opts_chunk:
+    fig.path: figures/
+params:
+  uni: CU
+  pri_bio: Your.Name
+  project_num: AAA--BBB
+bibliography: references.bib
+---
+
+```{r}
+#| include: false
+#| label: Project-Lead
+
+if (params$uni == "CU") {
+  Project_Lead = "Curtin University -- Prof Mark Gibberd, Dr Julia Easton, Prof Adam Sparks"
+} else if (params$uni == "UA") {
+  Project_Lead = "University of Adelaide -- Dr Julian Taylor, Dr Olena Kravchuck"
+} else {
+  Project_Lead = "University of Queensland -- Prof Scott Chapman, Emeritus Prof Kaye Basford"
+}
+```
+
+```{r}
+#| include: false
+#| label: email for project lead
+
+if (params$uni == "CU") {
+  email = "cbada@curtin.edu.au"
+} else if (params$uni == "UA") {
+  email = paste(params$pri_bio, "@adelaide.edu.au", sep = "")
+} else {
+  email = paste(params$pri_bio, "@uq.edu.au")
+}
+```
+
+```{r}
+#| include: false
+#| label: uni
+
+if (params$uni == "CU") {
+  university <- "Curtin University"
+} else if (params$uni == "UA") {
+  university <- "University of Adelaide"
+} else {
+  university <- "University of Queensland"
+}
+```
+
+```{r}
+#| label: Project number
+#| include: false
+
+Pro_Num = params$project_num
+
+```
+
+```{=latex}
+\begin{titlepage}
+
+\thispagestyle{Title_page}
+
+\vspace*{-2cm}
+
+  \begin{center}
+    \includegraphics[height=3cm]{assets/AAGI_logo.pdf}    
+  \end{center}
+
+  \vfill
+  
+  \rule{\textwidth}{0.5pt}
+
+  \begin{FlushRight}
+
+    \Huge
+    \textcolor{aagiteal}{\textbf{Analytics for the Australian Grains Industry 
+      -\\ `r university` (AAGI-`r params$uni`)\\
+      Technical Report Series: 123}}\\[6mm]
+      
+    \Large
+    {\textbf{Informative title for report}}\\
+    \vspace{2mm}{\textbf{Report for `r Pro_Num`}}\\[5mm]
+
+    \normalsize
+    \textbf{Your Name}\\
+    \vspace*{0.4cm}
+    \textbf{Email:}\; \texttt{%
+      \href{mailto:`r email`}%
+      {`r email`}}\\[8mm]
+    \textbf{Project Leads: `r Project_Lead`}\\[8mm]
+      
+    \today
+  \end{FlushRight}
+  \rule{\textwidth}{0.5pt}
+  
+  \vfill
+  
+\end{titlepage}
+```
+```{r}
+#| label: load
+#| message: false
+
+library(ggplot2)
+library(theme.aagi)
+library(flextable)
+library(dplyr)
+
+# set ggplot2 theme
+theme_set(theme_aagi())
+```
+
+\newpage
+
+```{=latex}
+\clearpage
+\setcounter{page}{1}
+```
+\tableofcontents
+
+\newpage
+
+# Some Text from George Box
+
+> Science and Statistics Aspects of scientific method are discussed: In particular, its representation as a motivated iteration in which, in succession, practice confronts theory, and theory, practice. Rapid progress requires sufficient flexibility to profit from such confrontations, and the ability to devise parsimonious but effective models, to worry selectively about model inadequacies and to employ mathematics skillfully but appropriately. The development of statistical methods at Rothamsted Experimental Station by Sir Ronald Fisher is used to illustrate these themes.
+
+[@Box1976]
+
+@Box1976
+
+# A Table
+
+## Testing for subsection
+
+### Testing for subsubsection
+
+This {flextable} follows the AAGI style guidelines.
+
+```{r}
+#| label: example-table
+#| echo: false
+#| include: true
+
+ft <- flextable(head(airquality) |>
+                  mutate(`Month Name` = "May")) |>
+  theme_ft_aagi()
+ft
+```
+
+\newpage
+
+# A Histogram
+
+The AAGI theme is automatically applied here as well.
+
+```{r}
+#| label: example-histogram
+
+ggplot(diamonds, aes(carat)) + 
+  geom_histogram()
+```
+
+# References
+
+::: {#refs}
+:::
