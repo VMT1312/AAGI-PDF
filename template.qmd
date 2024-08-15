@@ -1,8 +1,6 @@
 ---
 format:
   aagi-pdf: default
-author: First Last
-date: last-modified
 execute: 
   echo: false
 knitr:
@@ -104,6 +102,7 @@ Pro_Num = params$project_num
   
 \end{titlepage}
 ```
+
 ```{r}
 #| label: load
 #| message: false
