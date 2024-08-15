@@ -1,6 +1,6 @@
 ---
 format:
-  AAGI-pdf: default
+  aagi-pdf: default
 author: First Last
 date: last-modified
 execute: 
